@@ -6,3 +6,4 @@
 - **01** [LLM-Based Engineering Faces An Irreversible Crisis](01_ProblemSeries/01_LLM-BasedEngineeringFacesAnIrreversibleCrisis.md)
 - **02** [Efficiency Amplification and Responsibility Displacement](01_ProblemSeries/02_EfficiencyAmplificationAndResponsibilityDisplacement.md)
 - **03** [We Haven’t Learned How to Trace It](01_ProblemSeries/03_WeHaveNotLearnedHowToTraceIt%20.md)
+- **04** [Governance Becomes An Illusion](01_ProblemSeries/04_GovernanceBecomesAnIllusion.md)
