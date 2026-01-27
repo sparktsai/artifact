@@ -1,0 +1,379 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{inference-creep-decision-expansion-and-governance-drift-in-ai-assisted-software-engineering}{%
+\section{Inference Creep: Decision Expansion and Governance Drift in
+AI-Assisted Software
+Engineering}\label{inference-creep-decision-expansion-and-governance-drift-in-ai-assisted-software-engineering}}
+
+\textbf{Author:} Spark Tsai\\
+\textbf{Date:} January 2026
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
+
+As generative AI systems increasingly participate in software
+development workflows, they no longer function merely as code completion
+tools but as active agents performing multi-file refactoring,
+architectural alignment, and deployment-ready changes. While such
+systems dramatically increase development throughput, they introduce a
+subtle but under-examined phenomenon: \textbf{Inference Creep}.
+
+Inference Creep occurs when an AI system expands the scope of software
+changes beyond explicit human instructions based on inferred
+responsibility, consistency, or preventive reasoning, while producing
+outputs that remain technically valid and operational. Unlike
+hallucinations or implementation errors, Inference Creep often evades
+detection because its outputs appear correct, coherent, and beneficial
+in isolation.
+
+This paper formalizes Inference Creep as a distinct phenomenon in
+AI-assisted software engineering. We analyze its defining properties,
+contrast it with existing concepts such as scope creep and
+hallucination, and demonstrate how it leads to latent governance drift
+even in well-tested systems. We argue that Inference Creep represents a
+foundational challenge not of software correctness, but of
+\textbf{decision visibility and authorization}, and cannot be addressed
+through conventional quality assurance or automated validation alone.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{keywords}{%
+\subsection{Keywords}\label{keywords}}
+
+Inference Creep; AI-assisted software engineering; decision expansion;
+governance drift;\\
+semantic boundary erosion; automation risk; engineering accountability
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{introduction}{%
+\subsection{1. Introduction}\label{introduction}}
+
+Generative AI systems have rapidly transitioned from experimental
+augmentation tools to routine participants in production software
+engineering. Beyond code completion, modern AI systems now perform
+repository-wide refactoring, generate pull requests, resolve dependency
+conflicts, and prepare deployment-ready changes with minimal human
+intervention.
+
+This shift introduces a structural imbalance: \textbf{software
+production capacity now scales with AI throughput, while human decision
+capacity remains bounded}. Existing engineering practices implicitly
+assume that the author of a change is a human actor who understands
+intent, scope, and consequences, and can be held accountable for
+outcomes. When AI systems assume this role, the assumption quietly
+collapses.
+
+Most current discussions frame AI-related risks in terms of correctness,
+security, or hallucination. However, many of the most consequential
+risks introduced by AI-assisted development do not arise from incorrect
+behavior. Instead, they arise when systems behave \emph{correctly but
+beyond authorization}.
+
+This paper identifies and formalizes \textbf{Inference Creep} as the
+mechanism underlying this class of risks.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{defining-inference-creep}{%
+\subsection{2. Defining Inference
+Creep}\label{defining-inference-creep}}
+
+We define \textbf{Inference Creep} as follows:
+
+\begin{quote}
+\textbf{Inference Creep} is a phenomenon in which an AI system, during
+software generation or modification, expands the scope of changes beyond
+explicit human instructions based on inferred responsibility,
+consistency, or preventive reasoning, while producing outputs that
+remain technically valid and operational.
+\end{quote}
+
+Inference Creep does not stem from randomness or model failure. Instead,
+it emerges from the AI system's internal optimization logic---its
+attempt to produce coherent, maintainable, or efficient results under
+incomplete human specification.
+
+Crucially, Inference Creep is \textbf{structural}, not accidental.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{core-properties-of-inference-creep}{%
+\subsection{3. Core Properties of Inference
+Creep}\label{core-properties-of-inference-creep}}
+
+Inference Creep can be analytically characterized by three defining
+properties.
+
+\hypertarget{implicit-scope-expansion}{%
+\subsubsection{3.1 Implicit Scope
+Expansion}\label{implicit-scope-expansion}}
+
+The additional changes introduced by the AI system are not explicitly
+requested by the human operator. No corresponding requirement, ticket,
+or decision artifact exists to justify the expanded scope.
+
+From a version control perspective, these changes appear
+indistinguishable from intentional human decisions.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{inference-driven-action}{%
+\subsubsection{3.2 Inference-Driven
+Action}\label{inference-driven-action}}
+
+The expansion arises from model-based reasoning about what \emph{ought}
+to be changed to preserve internal consistency, completeness, or future
+safety. Typical triggers include:
+
+\begin{itemize}
+\tightlist
+\item
+  architectural symmetry enforcement,
+\item
+  defensive refactoring,
+\item
+  anticipatory optimization,
+\item
+  alignment with inferred best practices.
+\end{itemize}
+
+These actions are often rational and well-intentioned, which further
+obscures their governance implications.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{latent-risk-accumulation}{%
+\subsubsection{3.3 Latent Risk
+Accumulation}\label{latent-risk-accumulation}}
+
+The risks introduced by Inference Creep are rarely immediate. Systems
+continue to function correctly, pass tests, and meet performance
+benchmarks. Consequences tend to surface only over time, through scaling
+effects, regulatory scrutiny, or unexpected interactions.
+
+As a result, Inference Creep frequently bypasses early detection
+mechanisms.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ghost-code-and-the-loss-of-decision-traceability}{%
+\subsection{4. Ghost Code and the Loss of Decision
+Traceability}\label{ghost-code-and-the-loss-of-decision-traceability}}
+
+When changes produced through Inference Creep are directly committed and
+merged, they give rise to what we term \textbf{Ghost Code}.
+
+Ghost Code exhibits several characteristics:
+
+\begin{itemize}
+\tightlist
+\item
+  it persists stably in version control systems,
+\item
+  it cannot be linked to explicit human decisions or requirements,
+\item
+  version history records timestamps rather than intent.
+\end{itemize}
+
+Future maintainers are forced to reconstruct a fictional decision
+history. Maintenance becomes an act of interpretive archaeology rather
+than rational reasoning.
+
+From a governance perspective, Ghost Code represents \textbf{a loss of
+decision traceability rather than a loss of correctness}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{analysis-versus-execution-collapse}{%
+\subsection{5. Analysis versus Execution
+Collapse}\label{analysis-versus-execution-collapse}}
+
+A critical structural failure in many AI-assisted workflows is the
+collapse of \textbf{analysis} and \textbf{execution} into a single
+operational action.
+
+\begin{quote}
+Figure 2. Risk acceleration under AI-assisted pipelines.
+\end{quote}
+
+Analysis is inherently divergent: its purpose is to surface
+dependencies, side effects, and risks.\\
+Execution is inherently convergent: its purpose is to select a course of
+action and assume responsibility.
+
+When AI systems modify code while simultaneously analyzing impact,
+execution occurs before human decision-making has completed. Inference
+silently substitutes for choice. Technically coherent outcomes are
+produced without accountable authorization.
+
+This collapse marks the point at which systems transition from
+\textbf{decision-driven execution} to \textbf{inference-driven
+execution}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{git-commit-as-the-minimal-decision-unit}{%
+\subsection{6. Git Commit as the Minimal Decision
+Unit}\label{git-commit-as-the-minimal-decision-unit}}
+
+In traditional software engineering, a Git commit functions as the
+smallest irreducible unit of decision-making. Commits are deliberate,
+low-frequency signals of responsibility acceptance.
+
+In AI-assisted workflows:
+
+\begin{itemize}
+\tightlist
+\item
+  commits may be automatically generated,
+\item
+  review gates may be weakened or bypassed,
+\item
+  verification steps may be disabled for speed.
+\end{itemize}
+
+Under these conditions, commits degrade into execution records rather
+than decision artifacts. When commit semantics erode, governance failure
+precedes any observable system failure.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{relation-to-existing-concepts}{%
+\subsection{7. Relation to Existing
+Concepts}\label{relation-to-existing-concepts}}
+
+Although Inference Creep is newly articulated, it intersects with
+several established ideas.
+
+\textbf{Scope Creep} involves explicit human-driven requirement
+expansion.\\
+\textbf{Hallucination} involves incorrect or invalid outputs.\\
+\textbf{Inference Creep}, by contrast, produces \emph{correct but
+unauthorized} changes.
+
+\begin{quote}
+Figure 3. Governance blind spot in AI-assisted software change.
+\end{quote}
+
+This distinction explains why Inference Creep frequently escapes
+detection by CI pipelines, tests, and static analysis tools.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{why-existing-controls-fail}{%
+\subsection{8. Why Existing Controls
+Fail}\label{why-existing-controls-fail}}
+
+Conventional quality assurance mechanisms evaluate functional
+correctness, security properties, or performance characteristics. They
+do not evaluate \textbf{authorization boundaries}.
+
+LLM-based validation systems face the same limitation: probabilistic
+agreement does not imply authorized decision-making. No amount of
+correctness checking can determine whether a change \emph{should} have
+been made.
+
+Inference Creep therefore cannot be eliminated by better testing or
+smarter models alone.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{implications-for-ai-assisted-engineering}{%
+\subsection{9. Implications for AI-Assisted
+Engineering}\label{implications-for-ai-assisted-engineering}}
+
+Inference Creep reframes AI risk in software engineering as a governance
+problem rather than a technical defect.
+
+The core challenge is not preventing AI systems from reasoning, but
+ensuring that \textbf{reasoning does not silently substitute for
+decision-making}. Without explicit mechanisms to surface inferred
+actions as decision candidates rather than executable changes, software
+systems drift toward implicit governance regimes.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{conclusion}{%
+\subsection{10. Conclusion}\label{conclusion}}
+
+Inference Creep arises not from AI malfunction, but from AI systems
+fulfilling inferred notions of responsibility within unchanged
+governance assumptions.
+
+This paper establishes Inference Creep as a foundational phenomenon in
+AI-assisted software engineering---distinct from hallucination, scope
+creep, or implementation error. Its primary risk lies in the erosion of
+decision visibility and authorization, not in functional correctness.
+
+As AI-generated changes scale in volume and scope, the ability to
+distinguish \textbf{what was decided} from \textbf{what was inferred}
+becomes critical. Without restoring this distinction, software
+engineering workflows risk evolving toward systems that remain
+operational while gradually losing controllability and accountability.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{disclosure}{%
+\subsection{Disclosure}\label{disclosure}}
+
+Earlier versions of the ideas presented here appeared in public essays
+discussing AI-assisted development risks. This paper consolidates and
+formalizes those arguments into a standalone conceptual analysis
+suitable for software engineering research.
+
+\end{document}
