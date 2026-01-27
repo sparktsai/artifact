@@ -11,9 +11,9 @@
 
 As large language models and automation tools are increasingly embedded into software development workflows, modern DevOps practices are rapidly approaching end-to-end automation. Existing discussions primarily emphasize productivity gains and code quality improvements, while overlooking a structural governance risk introduced by AI-assisted pipelines: the erosion of explicit decision-making.
 
-This paper argues that the primary risk of AI-assisted DevOps is not technical error, but **decision vacancy**—a condition in which automated execution proceeds without clearly attributable human decisions. Through a multi-layer analysis, the paper introduces **Inference Creep** as a generative mechanism, **Ghost Code** as its long-term artifact, and **Risk Acceleration Pipelines** as the systemic outcome of chaining Auto Pull Request, Auto Merge, and Auto Deploy mechanisms.
+This paper argues that the primary risk of AI-assisted DevOps is not technical error, but **decision vacancy**—a governance condition in which automated execution proceeds without clearly attributable human decisions. Through a multi-layer analysis, the paper introduces **Inference Creep** as a generative mechanism, **Ghost Code** as its long-term artifact, and **Risk Acceleration Pipelines** as the systemic outcome of chaining Auto Pull Request, Auto Merge, and Auto Deploy mechanisms.
 
-Beyond problem identification, the paper proposes governance-oriented design responses, including friction-aware automation, standardized impact analysis deliverables, and auditable decision metrics. The paper positions **Decision Behavior Governance (DBG)** as a necessary conceptual foundation *toward* restoring decision visibility, accountability, and traceability in AI-native software engineering.
+Beyond problem identification, the paper proposes governance-oriented design responses, including friction-aware automation, standardized impact analysis deliverables, and auditable decision metrics. The paper positions **Decision Behavior Governance (DBG)** as a conceptual foundation for reasoning about decision visibility, accountability, and traceability in AI-native software engineering, rather than as a prescriptive methodology.
 
 ---
 
@@ -31,7 +31,7 @@ AI-assisted development tools have transitioned from experimental augmentation t
 
 Despite this shift, contemporary DevOps practices continue to rely on an implicit assumption: that the author of a code change is a human actor who understands intent, scope, and consequences, and can be held accountable for outcomes.
 
-When AI systems assume the role of effective authors, this assumption no longer holds. Yet surrounding governance structures—pull request review, continuous integration, and automated deployment—are often applied unchanged. This paper examines the resulting structural failure and formalizes it as a governance problem rather than a technical defect.
+When AI systems assume the role of effective authors, this assumption no longer holds. Yet surrounding governance structures—pull request review, continuous integration, and automated deployment—are often applied unchanged. This paper examines the resulting **structural mismatch between execution velocity and decision capacity**, and formalizes it as a governance problem rather than a technical defect—one that cannot be addressed by testing, static analysis, or code quality metrics alone.
 
 ---
 
@@ -68,19 +68,25 @@ Ghost Code exhibits several defining characteristics:
 - it cannot be linked to explicit requirements or decisions,
 - Git blame identifies timestamps rather than intent.
 
-As a result, future maintainers are forced to reconstruct a fictional decision history. Maintenance becomes an act of interpretive archaeology rather than rational reasoning, increasing cognitive load and long-term operational cost.
+As a result, future maintainers are forced to reconstruct a fictional decision history. Maintenance becomes an act of interpretive archaeology rather than rational reasoning, increasing cognitive load and long-term operational cost.  
+**From a governance perspective, Ghost Code represents a loss of decision traceability rather than a loss of correctness, signaling an early manifestation of decision vacancy.**
 
 ---
 
 ## 4. Analysis versus Execution: A Structural Conflict
 
-A critical design flaw in many AI-assisted tools is the collapse of **analysis** and **execution** into a single action.
+A critical structural failure in many AI-assisted tools is the collapse of **analysis** and **execution** into a single operational action.
+
+<img src="07-01.png" width="600">
+
+> Figure 1. Decision Boundary Collapse in AI-Assisted Software Workflows
 
 Analysis is inherently **divergent**. Its purpose is to surface dependencies, side effects, and potential risks.
 
 Execution is inherently **convergent**. Its purpose is to select a course of action and accept responsibility for consequences.
 
-When AI systems modify code while analyzing impact, execution occurs before human decision-making has been completed. Inference is silently substituted for choice, producing technically coherent outcomes without accountable intent.
+When AI systems modify code while analyzing impact, execution occurs before human decision-making has been completed. Inference is silently substituted for choice, producing technically coherent outcomes without accountable intent.  
+**This collapse marks the structural point at which governance shifts from **decision-driven execution** to **inference-driven execution**, without an explicit authorization boundary.**
 
 ---
 
@@ -98,7 +104,8 @@ In AI-assisted workflows, however:
 - review gates may be weakened (e.g., auto-approve),
 - verification steps may be bypassed (e.g., `--no-verify`).
 
-Under these conditions, commits cease to represent decisions and become mere execution records, severing the link between action and accountability. This erosion of commit-level decision meaning creates a structural need for explicit adjudication roles in AI-assisted workflows.
+Under these conditions, commits cease to represent decisions and become mere execution records, severing the link between action and accountability.  
+**When commit semantics erode, governance failure precedes any observable system failure.**
 
 ---
 
@@ -106,11 +113,15 @@ Under these conditions, commits cease to represent decisions and become mere exe
 
 When the following mechanisms are chained:
 
-1. Auto Pull Request  
-2. Auto Merge  
-3. Auto Deploy  
+1. Auto Pull Request
+2. Auto Merge
+3. Auto Deploy
 
 they form what this paper terms a **Risk Acceleration Pipeline**.
+
+<img src="07-02.png" width="600">
+
+> Figure 2. Risk acceleration under AI-assisted pipelines. 
 
 Such pipelines exhibit several structural characteristics:
 
@@ -118,7 +129,8 @@ Such pipelines exhibit several structural characteristics:
 - decisions are deferred to incident response,
 - responsibility shifts from designers to on-call operators.
 
-As a result, systems degrade from **decision-driven** to **incident-driven** operation, where governance is reactive rather than intentional.
+As a result, systems degrade from **decision-driven** to **incident-driven** operation, where governance is reactive rather than intentional.  
+**Risk Acceleration Pipelines represent a systemic amplification of Decision Vacancy rather than isolated automation errors, as illustrated by the accelerating governance debt curve in Figure 2.**
 
 ---
 
@@ -143,11 +155,17 @@ Analogies to **silent failures in autonomous systems** further illustrate how sy
 | Detectable by CI     | No               | No                          | Often              |
 | Nature of issue      | Governance       | Management                  | Quality            |
 
-This comparison highlights that Inference Creep cannot be addressed through quality assurance or requirement management mechanisms alone, but requires governance frameworks that explicitly account for decision-making and responsibility.
+<img src="07-03.png" width="600">
+
+> Figure 3. Governance blind spot in AI-assisted software change.
+
+This comparison highlights that Inference Creep cannot be addressed through quality assurance or requirement management mechanisms alone, but requires governance frameworks that explicitly account for decision-making and responsibility at execution time.
 
 ---
 
 ## 8. Governance-Oriented Design Responses
+
+From a governance perspective, **Inference Creep should not be treated as a defect to be eliminated, but as a signal that requires explicit decision handling**. The following responses aim to restore decision visibility rather than suppress AI capability.
 
 ### 8.1 Friction-Aware Automation
 
@@ -193,13 +211,27 @@ Disproportionately low human involvement in AI-heavy changes should trigger gove
 
 ---
 
+To consolidate the phenomena discussed in this paper under a single conceptual frame, 
+Figure X illustrates Decision Behavior Governance (DBG) as a reference regulatory control structure 
+for reasoning about decision authority and accountability in AI-assisted engineering systems. 
+
+Rather than prescribing specific tools or workflows, DBG provides a structural lens 
+for understanding how decision authority, constraints, and accountability interact 
+when generative systems operate at scale.
+
+<img src="dbg.png" width="600">
+
+> Figure 4. illustrates a reference governance pipeline aligned with Decision Behavior Governance (DBG), demonstrating how inference-driven risks identified in earlier sections can be absorbed through explicit regulatory control rather than automated execution.
+
+---
+
 ## 10. Conclusion
 
 Inference Creep does not arise from AI malfunction, but from AI systems fulfilling inferred notions of responsibility within unchanged governance assumptions.
 
-In AI-native software engineering, governance is no longer about constraining capability, but about ensuring that decisions remain visible, attributable, and auditable.
+This paper frames **Inference Creep, Ghost Code, Decision Vacancy, and Risk Acceleration Pipelines** under a broader conceptual lens referred to as **Decision Behavior Governance (DBG)**. DBG does not prescribe specific tools or workflows; rather, it provides a shared vocabulary for reasoning about how decisions are generated, displaced, deferred, or obscured within AI-assisted engineering systems operating at scale.
 
-Without redesigning decision boundaries, DevOps pipelines will continue to evolve toward greater speed and scale—at the cost of controllability and accountability.
+In AI-native software engineering, governance is no longer about constraining capability, but about ensuring that decisions remain **visible, attributable, and auditable**. Without redesigning decision boundaries, DevOps pipelines will continue to evolve toward greater speed and scale—at the cost of controllability and accountability.
 
 ---
 
