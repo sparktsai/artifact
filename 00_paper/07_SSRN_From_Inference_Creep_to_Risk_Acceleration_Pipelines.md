@@ -77,7 +77,7 @@ As a result, future maintainers are forced to reconstruct a fictional decision h
 
 A critical structural failure in many AI-assisted tools is the collapse of **analysis** and **execution** into a single operational action.
 
-<img src="07-01.png" width="600">
+![Figure 1. Decision Boundary Collapse](07-01.png)
 
 > Figure 1. Decision Boundary Collapse in AI-Assisted Software Workflows
 
@@ -119,7 +119,7 @@ When the following mechanisms are chained:
 
 they form what this paper terms a **Risk Acceleration Pipeline**.
 
-<img src="07-02.png" width="600">
+![Figure 2. Risk Acceleration](07-02.png)
 
 > Figure 2. Risk acceleration under AI-assisted pipelines. 
 
@@ -155,7 +155,7 @@ Analogies to **silent failures in autonomous systems** further illustrate how sy
 | Detectable by CI     | No               | No                          | Often              |
 | Nature of issue      | Governance       | Management                  | Quality            |
 
-<img src="07-03.png" width="600">
+![Figure 3. Governance Blind Spot](07-03.png)
 
 > Figure 3. Governance blind spot in AI-assisted software change.
 
